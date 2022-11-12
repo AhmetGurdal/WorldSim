@@ -1,0 +1,3 @@
+com\example\worldSim\WorldSimApplication.class
+com\example\worldSim\controller\world\request\WorldRequest.class
+com\example\worldSim\controller\world\WorldController.class
