@@ -18,10 +18,8 @@ public class Human extends Creature {
 
     private String name;
 
-
-
     public Human(int id, int posX, int posY, String name, int satietyLevel, int hydrationLevel){
-        super(posX, posY, TileType.HUMAN, true,satietyLevel,hydrationLevel);
+        super(id ,posX, posY, TileType.HUMAN, true,satietyLevel,hydrationLevel);
         this.name = name;
 
         HumanService.humans.put(id,this);
@@ -151,18 +149,25 @@ public class Human extends Creature {
             this.decreaseHydrationLevelBy(10);
             DirectionType directionType = selectDirection(world);
             Tile targetTile = checkDirectionTile(directionType, world);
-            if(targetTile.isHuman){
-                return;
-            }
-            if(targetTile != null && !targetTile.isHuman){
-                if(targetTile.getClass() == Resource.class){
+
+
+            if(targetTile != null){
+                if(targetTile.isHuman){
+                    return;
+                }
+                else if(targetTile.getClass().getSuperclass() == Resource.class){
                     this.consume(targetTile);
                 }
                 targetTile = new Ground(targetTile.posX, targetTile.posY);
                 world.changeTiles(this,targetTile);
-
+                System.out.println("HumanID : " + this.getId() + " - SL : " + this.getSatietyLevel() + " - HL : " + this.getHydrationLevel() );
+                System.out.println("Source : " + this.posX + " - " + this.posY);
+                System.out.println("Target : " + targetTile.posX + " - " + targetTile.posY);
+                System.out.println("TargetClass : "+ targetTile.getClass());
+                System.out.println("----------");
             }
         }
+
         //return new WorldState(world);
     };
 

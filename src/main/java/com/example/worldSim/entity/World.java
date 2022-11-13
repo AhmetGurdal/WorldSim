@@ -23,6 +23,8 @@ public class World implements StateImpl {
     private Tile[] tiles;
 
     private boolean isCreaturesAlive;
+
+    private int age;
     private static int worldCount = 0;
 
 
@@ -32,6 +34,7 @@ public class World implements StateImpl {
         this.nop = 0;
         this.nof = 0;
         this.now = 0;
+        this.age = 0;
         this.name = _name;
         this.sizeX = _sizeX;
         this.sizeY = _sizeY;
@@ -52,6 +55,7 @@ public class World implements StateImpl {
         this.nof = nof;
         this.now = now;
         this.name = name;
+        this.age = 0;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.isCreaturesAlive = nop > 0;
@@ -229,6 +233,7 @@ public class World implements StateImpl {
 
     @Override
     public WorldState getNextState() {
+        this.age += 1;
         if(isCreaturesAlive){
             if (isWorldValid && this.nop > 0) {
                 isCreaturesAlive = false;
@@ -237,7 +242,7 @@ public class World implements StateImpl {
                         if (tiles[x * this.sizeY + y].getType() == TileType.HUMAN) {
                             Human human = (Human) tiles[x * this.sizeY + y];
                             isCreaturesAlive = isCreaturesAlive || human.getIsAlive();
-                            if(human.getIsAlive()){
+                            if(human.getIsAlive() && this.age > human.getAge()){
                                 human.move(this);
                             }
                         }

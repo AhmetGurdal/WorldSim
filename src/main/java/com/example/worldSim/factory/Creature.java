@@ -12,15 +12,13 @@ public abstract class Creature extends Tile {
     private int satietyLevel;
     private int hydrationLevel;
     private int age;
-    public static int creatureCount;
-    public Creature(int x, int y, TileType type, boolean isAlive, int satietyLevel, int hydrationLevel) {
+    public Creature(int id, int x, int y, TileType type, boolean isAlive, int satietyLevel, int hydrationLevel) {
         super(x, y, type);
-        this.id = creatureCount;
+        this.id = id;
         this.age = 0;
         this.hydrationLevel = hydrationLevel;
         this.satietyLevel = satietyLevel;
         this.isAlive = isAlive;
-        creatureCount += 1;
     }
 
     public abstract void eat(Food food);
@@ -73,4 +71,11 @@ public abstract class Creature extends Tile {
         this.hydrationLevel += amount;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public int getId(){
+        return id;
+    }
 }
